@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CouponModule } from './coupon/coupon.module';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
 
 @Module({
   imports: [
@@ -16,6 +17,13 @@ import { CouponModule } from './coupon/coupon.module';
       entities: [__dirname + '/entity/*.js'],
       synchronize: true,
       logging: true,
+    }),
+    RedisModule.forRoot({
+      config: {
+        host: 'localhost',
+        port: 6379,
+        db: 0,
+      },
     }),
     CouponModule,
   ],
