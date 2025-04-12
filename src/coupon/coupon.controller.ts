@@ -1,5 +1,5 @@
 import { Controller, Param, ParseIntPipe, Post } from '@nestjs/common';
-import { DbLockService } from './db-lock.service';
+import { DbLockService } from './db-lock/db-lock.service';
 import { RedisLuaService } from './redis-lua.service';
 
 @Controller('coupons')

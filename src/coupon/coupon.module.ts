@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { CouponController } from './coupon.controller';
-import { DbLockService } from './db-lock.service';
 import { RedisLuaService } from './redis-lua.service';
+import { DbLockModule } from './db-lock/db-lock.module';
 
 @Module({
+  imports: [DbLockModule],
   controllers: [CouponController],
-  providers: [DbLockService, RedisLuaService],
+  providers: [RedisLuaService],
 })
 export class CouponModule {}
