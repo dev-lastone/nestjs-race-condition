@@ -43,6 +43,31 @@ describe('Coupon Concurrency Test', () => {
     expect(successCount).toBeLessThanOrEqual(100);
     expect(failureCount).toBeGreaterThanOrEqual(100);
   });
+
+  it('redis-lua', async () => {
+    const couponId = 1;
+    const userIds = Array.from({ length: 100 }, (_, i) => i + 1);
+
+    const results = await mapWithConcurrency(
+      userIds,
+      async (userId: number) => {
+        const response = await request(app.getHttpServer())
+          .post(`/coupons/${couponId}/issue/${userId}/redis-lua`)
+          .send();
+        return { userId, message: response.text };
+      },
+      2, // 동시성 제한
+    );
+
+    const successCount = results.filter((result) => !result.message).length;
+    const failureCount = results.filter((result) => result.message).length;
+
+    console.log('성공한 요청 수:', successCount);
+    console.log('실패한 요청 수:', failureCount);
+
+    expect(successCount).toBeLessThanOrEqual(100);
+    expect(failureCount).toBeGreaterThanOrEqual(100);
+  });
 });
 
 async function mapWithConcurrency(items, mapper, concurrency) {
