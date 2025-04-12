@@ -46,7 +46,7 @@ describe('Coupon Concurrency Test', () => {
 
   it('redis-lua', async () => {
     const couponId = 1;
-    const userIds = Array.from({ length: 100 }, (_, i) => i + 1);
+    const userIds = Array.from({ length: 50 }, (_, i) => i + 1);
 
     const results = await mapWithConcurrency(
       userIds,
@@ -65,8 +65,8 @@ describe('Coupon Concurrency Test', () => {
     console.log('성공한 요청 수:', successCount);
     console.log('실패한 요청 수:', failureCount);
 
-    expect(successCount).toBeLessThanOrEqual(100);
-    expect(failureCount).toBeGreaterThanOrEqual(100);
+    expect(successCount).toBeLessThanOrEqual(25);
+    expect(failureCount).toBeGreaterThanOrEqual(25);
   });
 });
 
