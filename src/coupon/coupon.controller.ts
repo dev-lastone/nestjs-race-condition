@@ -14,8 +14,7 @@ export class CouponController {
     @Param('couponId', ParseIntPipe) couponId: number,
     @Param('userId', ParseIntPipe) userId: number,
   ) {
-    const result = await this.dbLockService.issueCoupon(userId, couponId);
-    return { message: result };
+    return await this.dbLockService.issueCoupon(userId, couponId);
   }
 
   @Post(':couponId/issue/:userId/redis-lua')
@@ -23,7 +22,6 @@ export class CouponController {
     @Param('couponId', ParseIntPipe) couponId: number,
     @Param('userId', ParseIntPipe) userId: number,
   ) {
-    const result = await this.redisLuaService.issueCoupon(userId, couponId);
-    return { message: result };
+    return await this.redisLuaService.issueCoupon(userId, couponId);
   }
 }
