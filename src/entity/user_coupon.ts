@@ -4,8 +4,10 @@ import {
   DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 
+@Unique(['userId', 'couponId'])
 @Entity()
 export class UserCoupon {
   @PrimaryGeneratedColumn()
